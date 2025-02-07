@@ -1,0 +1,291 @@
+{
+  "Trigger": {
+    "scope": "yaml",
+    "prefix": "- trigger",
+    "body": [
+      "- trigger: ${1:shortcut}",
+      "  $0",
+    ],
+    "description": "Insert an Espanso trigger"
+  },
+  "Regex": {
+    "scope": "yaml",
+    "prefix": "- regex",
+    "body": [
+      "- regex: ${1:pattern} ",
+      "  $0",
+    ],
+    "description": "Insert an Espanso regex trigger"
+  },
+  "Triggers": {
+    "scope": "yaml",
+    "prefix": "- triggers",
+    "body": [
+      "- triggers: [${1:shortcut1}, ${2:shortcut2}]",
+      "  $0"
+    ],
+    "description": "Insert an Espanso triggers list"
+  },
+  "Label": {
+    "scope": "yaml",
+    "prefix": "label",
+    "body": [
+      "label: ${1:label_name}",
+      "$0"
+    ],
+    "description": "Insert an Espanso label"
+  },
+  "Replace": {
+    "scope": "yaml",
+    "prefix": "replace",
+    "body": [
+      "replace: ${1:replacement}",
+      "$0"
+    ],
+    "description": "Insert an Espanso replace field"
+  },
+  "Image Path": {
+    "scope": "yaml",
+    "prefix": "image_path",
+    "body": [
+      "image_path: ${1:path}",
+      "$0"
+    ],
+    "description": "Insert an Espanso image path"
+  },
+  "Form": {
+    "scope": "yaml",
+    "prefix": "form",
+    "body": [
+      "form:",
+      "${1:form_name}:"
+    ],
+    "description": "Insert an Espanso form"
+  },
+  "Form Fields": {
+    "scope": "yaml",
+    "prefix": "form_fields",
+    "body": [
+      "form_fields:",
+      "- ${1:field_name}:"
+    ],
+    "description": "Insert Espanso form fields"
+  },
+  "Vars": {
+    "scope": "yaml",
+    "prefix": "vars",
+    "body": [
+      "vars:",
+      "- name: ${1:var_name}",
+      "  type: ${2|echo,date,choice,clipboard,form,script,shell,random|}",
+      "  params:",
+      "    ${3|echo: ,format: ,values: ,layout: ,args: ,cmd: ,choices: |}"
+    ],
+    "description": "Insert an Espanso variable"
+  },
+  "Word": {
+    "scope": "yaml",
+    "prefix": "word",
+    "body": [
+      "word: true"
+    ],
+    "description": "Insert Espanso word match"
+  },
+  "Left Word": {
+    "scope": "yaml",
+    "prefix": "left_word",
+    "body": [
+      "left_word: true"
+    ],
+    "description": "Insert Espanso left word match"
+  },
+  "Right Word": {
+    "scope": "yaml",
+    "prefix": "right_word",
+    "body": [
+      "right_word: true"
+    ],
+    "description": "Insert Espanso right word match"
+  },
+  "Propagate Case": {
+    "scope": "yaml",
+    "prefix": "propagate_case",
+    "body": [
+      "propagate_case: true"
+    ],
+    "description": "Insert Espanso propagate_case field"
+  },
+  "Uppercase Style": {
+    "scope": "yaml",
+    "prefix": "uppercase_style",
+    "body": [
+      "uppercase_style: ${1|capitalize,capitalize_words,uppercase|}"
+    ],
+    "description": "Choose an uppercase style"
+  },
+  "Force Mode": {
+    "scope": "yaml",
+    "prefix": "force_mode",
+    "body": [
+      "force_mode: ${1|clipboard,keys|}"
+    ],
+    "description": "Choose an Espanso force_mode"
+  },
+  "Markdown": {
+    "scope": "yaml",
+    "prefix": "markdown",
+    "body": [
+      "markdown: ${1:shortcut}",
+      "$0"
+    ],
+    "description": "Insert an Espanso markdown field"
+  },
+  "Paragraph": {
+    "scope": "yaml",
+    "prefix": "paragraph",
+    "body": [
+      "paragraph: true"
+    ],
+    "description": "Insert Espanso markdown paragraph field"
+  },
+  "HTML": {
+    "scope": "yaml",
+    "prefix": "html",
+    "body": [
+      "html: ${1:shortcut}",
+      "$0"
+    ],
+    "description": "Insert an Espanso HTML field"
+  },
+  "Search Terms": {
+    "scope": "yaml",
+    "prefix": "search_terms",
+    "body": [
+      "search_terms:",
+      "  - ${1:term}",
+      "  - ${2:term}"
+    ],
+    "description": "Insert Espanso search terms"
+  },
+  "Name": {
+    "scope": "yaml",
+    "prefix": "- name",
+    "body": [
+      "- name: ${1:var_name}",
+      "  type: "
+    ],
+    "description": "Insert an Espanso name field"
+  },
+  "Params": {
+    "scope": "yaml",
+    "prefix": "params",
+    "body": [
+      "params:",
+      "  $0"
+    ],
+    "description": "Insert an Espanso params field"
+  },
+  "Depends On": {
+    "scope": "yaml",
+    "prefix": "depends_on",
+    "body": [
+      "depends_on: ${1:dependency}",
+      "$0"
+    ],
+    "description": "Insert an Espanso depends_on field"
+  }, 
+  "Espanso Simple Match": {
+    "scope": "yaml",
+    "prefix": "esp_trigger",
+    "body": [
+      "  - trigger: ${1:trigger}",
+      "    replace: ${2:replacement}",
+      "$0"
+    ],
+    "description": "Basic Espanso match snippet"
+  },
+"Espanso Regex Match": {
+    "scope": "yaml",
+    "prefix": "esp_regex",
+    "body": [
+      "  - regex: ${1:regex}",
+      "    replace: ${2:replacement}",
+      "$0"
+    ],
+    "description": "Regex Espanso match snippet"
+  },
+"Espanso Echo Variable": {
+    "scope": "yaml",
+    "prefix": "esp_echo",
+    "body": [
+      "  - trigger: ${1:shortcut}",
+      "    replace: '{{${2:var_name}}}'",
+      "    vars:",
+      "      - name: ${2:var_name}",
+      "        type: echo",
+      "        params:", 
+      "          echo: ${3:value}",
+      "$0"		
+    ],
+    "description": "Define a variable using type: echo"
+},
+"Espanso Python Script Match": {
+    "scope": "yaml",
+    "prefix": "esp_script",
+    "body": [
+      "  - trigger: ${1:shortcut}",
+      "    replace: '{{${2:output}}}'",
+      "    vars:",
+      "      - name: ${2:output}",
+      "        type: script",
+      "        params:",
+      "          args:",
+      "            - python",
+      "            - -c",
+      "            - |",
+      "              ${3:code}",
+      "$0"
+    ],
+    "description": "Execute a Python script and return its output"
+},
+"Espanso Shell Script Match (Zsh)": {
+    "scope": "yaml",
+    "prefix": "esp_zsh",
+    "body": [
+    "- trigger: ${1:shortcut}",
+    "  replace: '{{output}}'",
+    "  vars:",
+    "    - name: output",
+    "      type: script",
+    "      args: [ zsh, -c, source ~/.zshrc; ${2:command} ]"
+    ],
+    "description": "Execute a Zsh script with aliases"
+},
+"Espanso Bash Script Match": {
+    "scope": "yaml",
+    "prefix": "esp_bash",
+    "body": [
+    "  - trigger: ${1:shortcut}",
+    "    replace: {{output}}",
+    "    vars:",
+    "      - name: output",
+    "        type: script",
+    "        args: [ bash, -c, ${2:command} ]"
+    ],
+    "description": "Execute a Bash script"
+},
+"Espanso Node.js Inline Script": {
+    "scope": "yaml",
+    "prefix": "esp_node",
+    "body": [
+    "- trigger: ${1:shortcut}",
+    "  replace: {{output}}",
+    "  vars:",
+    "    - name: output",
+    "      type: script",
+    "      args: [ node, -e, console.log(${2:code}) ]"
+    ],
+    "description": "Run an inline Node.js script"
+}
+}
+
