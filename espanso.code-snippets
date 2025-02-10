@@ -6,7 +6,7 @@
       "depends_on: ${1:trigger}",
       "$0"
     ],
-    "description": "Insert an Espanso depends_on field"
+    "description": "Insert an Espanso depends_on key"
   },
   "Force Mode": {
     "scope": "yaml",
@@ -14,14 +14,15 @@
     "body": [
       "force_mode: ${1|clipboard,keys|}"
     ],
-    "description": "Choose an Espanso force_mode"
+    "description": "Choose an Espanso injection method"
   },
   "Form Fields": {
     "scope": "yaml",
     "prefix": "form_fields:",
     "body": [
       "form_fields:",
-      "- ${1:field_name}:"
+      "\t${1:field_name}:",
+      "\t\t$0"
     ],
     "description": "Insert Espanso form fields"
   },
@@ -29,28 +30,11 @@
     "scope": "yaml",
     "prefix": "form:",
     "body": [
-      "form:",
-      "${1:form_name}:"
+      "form: |",
+      "\t${1:form_name}:",
+      "\t\t${2|multiline: true,default: ,choice: |}"
     ],
     "description": "Insert an Espanso form"
-  },
-  "HTML": {
-    "scope": "yaml",
-    "prefix": "html:",
-    "body": [
-      "html: ${1|:shortcut,\\||}",
-      "$0"
-    ],
-    "description": "Insert an Espanso HTML field"
-  },
-  "Image Path": {
-    "scope": "yaml",
-    "prefix": "image_path:",
-    "body": [
-      "image_path: ${1:path}",
-      "$0"
-    ],
-    "description": "Insert an Espanso image path"
   },
   "Label": {
     "scope": "yaml",
@@ -65,11 +49,11 @@
     "scope": "yaml",
     "prefix": "layout:",
     "body": [
-      "layout: [[${1|field,\\||}]]",
+      "layout: [[${1|field,\\|,>|}]]",
       "fields:",
-      "  ${1:field}: "
+      "\t${1:field}: "
     ],
-    "description": "Insert an Espanso label"
+    "description": "Insert an Espanso form layout"
   },
   "Left Word": {
     "scope": "yaml",
@@ -77,24 +61,16 @@
     "body": [
       "left_word: true"
     ],
-    "description": "Insert Espanso left word match"
-  },
-  "Markdown": {
-    "scope": "yaml",
-    "prefix": "markdown:",
-    "body": [
-      "markdown: ${1|:shortcut,\\||}",
-      "$0"
-    ],
-    "description": "Insert an Espanso markdown field"
+    "description": "Insert Espanso left_word: true"
   },
   "Name": {
     "scope": "yaml",
     "prefix": "- name:",
     "body": [
       "- name: ${1:var_name}",
-      "  type: ${2|echo,date,choice,clipboard,form,script,shell,random|}",
-      "$0"
+      "\ttype: ${2|echo,date,choice,clipboard,form,script,shell,random|}",
+      "\tparams:",
+      "\t\t$0"
     ],
     "description": "Insert an Espanso name field"
   },
@@ -104,14 +80,14 @@
     "body": [
       "paragraph: true"
     ],
-    "description": "Insert Espanso markdown paragraph field"
+    "description": "Insert Espanso markdown paragraph: true"
   },
   "Params": {
     "scope": "yaml",
     "prefix": "params:",
     "body": [
       "params:",
-      "  $0"
+      "\t$0"
     ],
     "description": "Insert an Espanso params field"
   },
@@ -121,25 +97,30 @@
     "body": [
       "propagate_case: true"
     ],
-    "description": "Insert Espanso propagate_case field"
+    "description": "Insert Espanso propagate_case: true"
   },
   "Regex": {
     "scope": "yaml",
     "prefix": "- regex:",
     "body": [
       "- regex: ${1:pattern} ",
-      "  $0",
+      "\t${2|replace,form,markdown,html,image_path|}: ${3|replacement,\\|,>|}"
     ],
     "description": "Insert an Espanso regex trigger"
   },
-  "Replace": {
+  "Regex with variable": {
     "scope": "yaml",
-    "prefix": "replace:",
+    "prefix": "- regexvar",
     "body": [
-      "replace: ${1|replacement,\\||}",
-      "$0"
+      "- regex: ${1:shortcut}",
+      "\t${2|replace,form,markdown,html,image_path|}: '{{${3|replacement,\\|,>|}}}'",
+      "\tvars:",
+      "\t\t- name: ${3}",
+      "\t\t\ttype: ${4|echo,date,choice,clipboard,form,script,shell,random|}",
+      "\t\t\tparams:",
+      "\t\t\t\t${5|echo: ,format: ,values: ,layout: ,args: ,cmd: ,choices: |}"
     ],
-    "description": "Insert an Espanso replace field"
+    "description": "Insert an Espanso regex with variable type and parameters"
   },
   "Right Word": {
     "scope": "yaml",
@@ -147,15 +128,15 @@
     "body": [
       "right_word: true"
     ],
-    "description": "Insert Espanso right word match"
+    "description": "Insert Espanso right_word: true"
   },
   "Search Terms": {
     "scope": "yaml",
     "prefix": "search_terms:",
     "body": [
       "search_terms:",
-      "  - ${1:term}",
-      "  - ${2:term}"
+      "\t- ${1:term}",
+      "\t- ${2:term}"
     ],
     "description": "Insert Espanso search terms"
   },
@@ -164,16 +145,30 @@
     "prefix": "- trigger:",
     "body": [
       "- trigger: ${1:shortcut}",
-      "  $0",
+      "\t${2|replace,form,markdown,html,image_path|}: ${3|replacement,\\|,>|}"
     ],
     "description": "Insert an Espanso trigger"
+  },
+  "Trigger with variable": {
+    "scope": "yaml",
+    "prefix": "- triggervar",
+    "body": [
+      "- trigger: ${1:shortcut}",
+      "\t${2|replace,form,markdown,html,image_path|}: '{{${3|replacement,\\|,>|}}}'",
+      "\tvars:",
+      "\t\t- name: ${3}",
+      "\t\t\ttype: ${4|echo,date,choice,clipboard,form,script,shell,random|}",
+      "\t\t\tparams:",
+      "\t\t\t\t${5|echo: ,format: ,values: ,layout: ,args: ,cmd: ,choices: |}"
+    ],
+    "description": "Insert an Espanso trigger with variable type and parameters"
   },
   "Triggers": {
     "scope": "yaml",
     "prefix": "- triggers:",
     "body": [
-      "- triggers: [${1:shortcut1}, ${2:shortcut2}]",
-      "  $0"
+      "- triggers: [${1:shortcut_1}, ${2:shortcut_2}]",
+      "\t${3|replace,form,markdown,html,image_path|}: ${4|replacement,\\|,>|}"
     ],
     "description": "Insert an Espanso triggers list"
   },
@@ -200,9 +195,9 @@
     "body": [
       "vars:",
       "- name: ${1:var_name}",
-      "  type: ${2|echo,date,choice,clipboard,form,script,shell,random|}",
-      "  params:",
-      "    ${3|echo: ,format: ,values: ,layout: ,args: ,cmd: ,choices: |}"
+      "\ttype: ${2|echo,date,choice,clipboard,form,script,shell,random|}",
+      "\tparams:",
+      "\t\t${3|echo: ,format: ,values: ,layout: ,args: ,cmd: ,choices: |}"
     ],
     "description": "Insert an Espanso variable"
   },
@@ -214,75 +209,39 @@
     ],
     "description": "Insert Espanso word match"
   },
-  "Espanso simple trigger/replace": {
-    "scope": "yaml",
-    "prefix": "esp_trigger",
-    "body": [
-      "  - trigger: ${1:trigger}",
-      "    replace: ${2:replacement}",
-      "$0"
-    ],
-    "description": "Basic Espanso match snippet"
-  },
-"Espanso regex match": {
-    "scope": "yaml",
-    "prefix": "esp_regex",
-    "body": [
-      "  - regex: ${1:regex}",
-      "    replace: ${2:replacement}",
-      "$0"
-    ],
-    "description": "Regex Espanso match snippet"
-  },
-"Espanso echo variable match": {
-    "scope": "yaml",
-    "prefix": "esp_echo",
-    "body": [
-      "  - trigger: ${1:shortcut}",
-      "    replace: '{{${2:var_name}}}'",
-      "    vars:",
-      "      - name: ${2:var_name}",
-      "        type: echo",
-      "        params:", 
-      "          echo: ${3:value}",
-      "$0"		
-    ],
-    "description": "Define a variable using type: echo"
-},
-"Espanso inline script match": {
+  "Espanso inline script match": {
     "scope": "yaml",
     "prefix": "esp_script",
     "body": [
-      "  - trigger: ${1:shortcut}",
-      "    replace: '{{${2:output}}}'",
-      "    vars:",
-      "      - name: ${2:output}",
-      "        type: script",
-      "        params:",
-      "          args:",
-      "            - ${3|python,zsh,pwsh,powershell,sh|}",
-      "            - -c",
-      "            - |",
-      "              ${4:code}",
+      "\t- trigger: ${1:shortcut}",
+      "\t\treplace: '{{${2:output}}}'",
+      "\t\tvars:",
+      "\t\t\t- name: ${2:output}",
+      "\t\t\t\ttype: script",
+      "\t\t\t\tparams:",
+      "\t\t\t\t\targs:",
+      "\t\t\t\t\t\t- ${3|python,zsh,pwsh,powershell,sh|}",
+      "\t\t\t\t\t\t- -c",
+      "\t\t\t\t\t\t- |",
+      "\t\t\t\t\t\t\t${4:code}",
       "$0"
     ],
     "description": "Execute a script"
-},
-"Espanso shell match": {
+  },
+  "Espanso shell match": {
     "scope": "yaml",
     "prefix": "esp_shell",
     "body": [
-    "  - trigger: ${1:shortcut}",
-    "    replace: '{{${2:output}}}'",
-    "    vars:",
-    "      - name: ${2:output}",
-    "        type: shell",
-    "        shell: ${3|bash,zsh,pwsh,cmd,powershell,sh|}",
-    "        params:",
-    "          cmd: ${4:command}",
-    "$0"
+      "\t- trigger: ${1:shortcut}",
+      "\t\treplace: '{{${2:output}}}'",
+      "\t\tvars:",
+      "\t\t\t- name: ${2:output}",
+      "\t\t\t\ttype: shell",
+      "\t\t\t\tshell: ${3|bash,zsh,pwsh,cmd,powershell,sh|}",
+      "\t\t\t\tparams:",
+      "\t\t\t\t\tcmd: ${4:command}",
+      "$0"
     ],
     "description": "Execute shell commands"
-},
+  }
 }
-
