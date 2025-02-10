@@ -14,7 +14,7 @@
     "body": [
       "force_mode: ${1|clipboard,keys|}"
     ],
-    "description": "Choose an Espanso injection method"
+    "description": "Choose an Espanso injection method for this trigger"
   },
   "Form Fields": {
     "scope": "yaml",
@@ -40,7 +40,7 @@
     "scope": "yaml",
     "prefix": "label:",
     "body": [
-      "label: ${1:label_name}",
+      "label: ${1:label_value}",
       "$0"
     ],
     "description": "Insert an Espanso label"
@@ -57,7 +57,7 @@
   },
   "Left Word": {
     "scope": "yaml",
-    "prefix": "left_word:",
+    "prefix": "left_word: true",
     "body": [
       "left_word: true"
     ],
@@ -72,11 +72,11 @@
       "\tparams:",
       "\t\t$0"
     ],
-    "description": "Insert an Espanso name field"
+    "description": "Insert an Espanso variable name field"
   },
   "Paragraph": {
     "scope": "yaml",
-    "prefix": "paragraph:",
+    "prefix": "paragraph: true",
     "body": [
       "paragraph: true"
     ],
@@ -93,7 +93,7 @@
   },
   "Propagate Case": {
     "scope": "yaml",
-    "prefix": "propagate_case:",
+    "prefix": "propagate_case: true",
     "body": [
       "propagate_case: true"
     ],
@@ -103,8 +103,8 @@
     "scope": "yaml",
     "prefix": "- regex:",
     "body": [
-      "- regex: ${1:pattern} ",
-      "\t${2|replace,form,markdown,html,image_path|}: ${3|replacement,\\|,>|}"
+      "- regex: ${1} ",
+      "\t${2|replace,form,markdown,html,image_path|}: ${3}"
     ],
     "description": "Insert an Espanso regex trigger"
   },
@@ -112,7 +112,7 @@
     "scope": "yaml",
     "prefix": "- regexvar",
     "body": [
-      "- regex: ${1:shortcut}",
+      "- regex: ${1}",
       "\t${2|replace,form,markdown,html,image_path|}: '{{${3|replacement,\\|,>|}}}'",
       "\tvars:",
       "\t\t- name: ${3}",
@@ -120,11 +120,11 @@
       "\t\t\tparams:",
       "\t\t\t\t${5|echo: ,format: ,values: ,layout: ,args: ,cmd: ,choices: |}"
     ],
-    "description": "Insert an Espanso regex with variable type and parameters"
+    "description": "Insert an Espanso regex with variable type and parameter"
   },
   "Right Word": {
     "scope": "yaml",
-    "prefix": "right_word:",
+    "prefix": "right_word: true",
     "body": [
       "right_word: true"
     ],
@@ -144,8 +144,8 @@
     "scope": "yaml",
     "prefix": "- trigger:",
     "body": [
-      "- trigger: ${1:shortcut}",
-      "\t${2|replace,form,markdown,html,image_path|}: ${3|replacement,\\|,>|}"
+      "- trigger: ${1}",
+      "\t${2|replace,form,markdown,html,image_path|}: ${3}"
     ],
     "description": "Insert an Espanso trigger"
   },
@@ -153,8 +153,8 @@
     "scope": "yaml",
     "prefix": "- triggervar",
     "body": [
-      "- trigger: ${1:shortcut}",
-      "\t${2|replace,form,markdown,html,image_path|}: '{{${3|replacement,\\|,>|}}}'",
+      "- trigger: ${1}",
+      "\t${2|replace,form,markdown,html,image_path|}: '{{${3}}}'",
       "\tvars:",
       "\t\t- name: ${3}",
       "\t\t\ttype: ${4|echo,date,choice,clipboard,form,script,shell,random|}",
@@ -167,8 +167,8 @@
     "scope": "yaml",
     "prefix": "- triggers:",
     "body": [
-      "- triggers: [${1:shortcut_1}, ${2:shortcut_2}]",
-      "\t${3|replace,form,markdown,html,image_path|}: ${4|replacement,\\|,>|}"
+      "- triggers: [${1}, ${2}]",
+      "\t${3|replace,form,markdown,html,image_path|}: ${4}"
     ],
     "description": "Insert an Espanso triggers list"
   },
@@ -203,7 +203,7 @@
   },
   "Word": {
     "scope": "yaml",
-    "prefix": "word:",
+    "prefix": "word: true",
     "body": [
       "word: true"
     ],
@@ -213,8 +213,8 @@
     "scope": "yaml",
     "prefix": "esp_script",
     "body": [
-      "\t- trigger: ${1:shortcut}",
-      "\t\treplace: '{{${2:output}}}'",
+      "\t- trigger: ${1}",
+      "\t\treplace: '{{${2}}}'",
       "\t\tvars:",
       "\t\t\t- name: ${2:output}",
       "\t\t\t\ttype: script",
@@ -232,13 +232,13 @@
     "scope": "yaml",
     "prefix": "esp_shell",
     "body": [
-      "\t- trigger: ${1:shortcut}",
-      "\t\treplace: '{{${2:output}}}'",
+      "\t- trigger: ${1}",
+      "\t\treplace: '{{${2}}}'",
       "\t\tvars:",
-      "\t\t\t- name: ${2:output}",
-      "\t\t\t\ttype: shell",
-      "\t\t\t\tshell: ${3|bash,zsh,pwsh,cmd,powershell,sh|}",
+      "\t\t\t- name: ${2}",
+      "\t\t\t\ttype: shell",      
       "\t\t\t\tparams:",
+      "\t\t\t\t\tshell: ${3|bash,zsh,pwsh,cmd,powershell,sh|}",
       "\t\t\t\t\tcmd: ${4:command}",
       "$0"
     ],
