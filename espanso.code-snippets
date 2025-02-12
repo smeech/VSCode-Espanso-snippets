@@ -3,8 +3,7 @@
     "scope": "yaml",
     "prefix": "depends_on:",
     "body": [
-      "depends_on: ${1:trigger}",
-      "$0"
+      "depends_on: ${1:trigger}"
     ],
     "description": "Insert an Espanso depends_on key"
   },
@@ -40,8 +39,7 @@
     "scope": "yaml",
     "prefix": "label:",
     "body": [
-      "label: ${1:label_value}",
-      "$0"
+      "label: ${1:label_text}"
     ],
     "description": "Insert an Espanso label"
   },
@@ -72,7 +70,7 @@
       "\tparams:",
       "\t\t$0"
     ],
-    "description": "Insert an Espanso variable name field"
+    "description": "Insert an Espanso variable name field and type"
   },
   "Paragraph": {
     "scope": "yaml",
@@ -106,7 +104,7 @@
       "- regex: ${1} ",
       "\t${2|replace,form,markdown,html,image_path|}: ${3}"
     ],
-    "description": "Insert an Espanso regex trigger"
+    "description": "Insert a simple Espanso regex trigger"
   },
   "Regex with variable": {
     "scope": "yaml",
@@ -147,14 +145,14 @@
       "- trigger: ${1}",
       "\t${2|replace,form,markdown,html,image_path|}: ${3}"
     ],
-    "description": "Insert an Espanso trigger"
+    "description": "Insert a simple Espanso trigger"
   },
   "Trigger with variable": {
     "scope": "yaml",
     "prefix": "- triggervar",
     "body": [
       "- trigger: ${1}",
-      "\t${2|replace,form,markdown,html,image_path|}: '{{${3}}}'",
+      "\t${2|replace,form,markdown,html,image_path|}: '{{${3:output}}}'",
       "\tvars:",
       "\t\t- name: ${3}",
       "\t\t\ttype: ${4|echo,date,choice,clipboard,form,script,shell,random|}",
@@ -170,14 +168,13 @@
       "- triggers: [${1}, ${2}]",
       "\t${3|replace,form,markdown,html,image_path|}: ${4}"
     ],
-    "description": "Insert an Espanso triggers list"
+    "description": "Insert a simple Espanso triggers list"
   },
   "Type": {
     "scope": "yaml",
     "prefix": "type:",
     "body": [
-      "type: ${2|echo,date,choice,clipboard,form,script,shell,random|}",
-      "$0"
+      "type: ${2|echo,date,choice,clipboard,form,script,shell,random|}"
     ],
     "description": "Insert an Espanso type item"
   },
@@ -187,7 +184,7 @@
     "body": [
       "uppercase_style: ${1|capitalize,capitalize_words,uppercase|}"
     ],
-    "description": "Choose an uppercase style"
+    "description": "Insert an Espanso uppercase style"
   },
   "Vars": {
     "scope": "yaml",
@@ -207,41 +204,39 @@
     "body": [
       "word: true"
     ],
-    "description": "Insert Espanso word match"
+    "description": "Insert an Espanso word: true"
   },
   "Espanso inline script match": {
     "scope": "yaml",
     "prefix": "esp_script",
     "body": [
-      "\t- trigger: ${1}",
-      "\t\treplace: '{{${2}}}'",
+      "\t- ${1|trigger,regex,triggers|}: ${2}",
+      "\t\t${3|replace,form,markdown,html,image_path|}: '{{${4:output}}}'",
       "\t\tvars:",
-      "\t\t\t- name: ${2:output}",
+      "\t\t\t- name: ${4}",
       "\t\t\t\ttype: script",
       "\t\t\t\tparams:",
       "\t\t\t\t\targs:",
-      "\t\t\t\t\t\t- ${3|python,zsh,pwsh,powershell,sh|}",
+      "\t\t\t\t\t\t- ${5|python,zsh,pwsh,powershell,sh|}",
       "\t\t\t\t\t\t- -c",
       "\t\t\t\t\t\t- |",
-      "\t\t\t\t\t\t\t${4:code}",
-      "$0"
+      "\t\t\t\t\t\t\t${6:code}"
     ],
-    "description": "Execute a script"
+    "description": "Insert an Espanso script trigger"
   },
   "Espanso shell match": {
     "scope": "yaml",
     "prefix": "esp_shell",
     "body": [
-      "\t- trigger: ${1}",
-      "\t\treplace: '{{${2}}}'",
+      "\t- ${1|trigger,regex,triggers|}: ${2}",
+      "\t\t${3|replace,form,markdown,html,image_path|}: '{{${4:output}}}'",
       "\t\tvars:",
-      "\t\t\t- name: ${2}",
+      "\t\t\t- name: ${4}",
       "\t\t\t\ttype: shell",      
       "\t\t\t\tparams:",
-      "\t\t\t\t\tshell: ${3|bash,zsh,pwsh,cmd,powershell,sh|}",
-      "\t\t\t\t\tcmd: ${4:command}",
-      "$0"
+      "\t\t\t\t\tshell: ${5|bash,zsh,pwsh,cmd,powershell,sh|}",
+      "\t\t\t\t\tcmd: ${6:command}"
     ],
-    "description": "Execute shell commands"
+    "description": "Insert an Espanso shell trigger"
   }
 }
